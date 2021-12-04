@@ -42,3 +42,7 @@ book_df.columns.name = 'user_id'
 user_id, book_id, score = input("사용자 id, 책 id, 평점을 입력해주세요.\n").split(',')
 
 book_df.insert(0,user_id,0)
+
+for j in range(len(book_df)):
+    if book_id == book_df.index[j]:
+        book_df.iloc[j,0] = score
