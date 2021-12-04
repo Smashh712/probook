@@ -5,7 +5,10 @@ import json
 booklist_id = []
 booklist_name = []
 
-search_list = ['파이썬', '리엑트', '웹', '프론트엔드', '백엔드', '자바', '자바스크립트']
+search_list = ['파이썬', '리엑트', '웹', '프론트엔드', '백엔드', '자바', '자바스크립트',
+'C언어', 'C++', 'node.js', '앱 프로그래밍', '자료 구조', '컴퓨터 구조', '알고리즘',
+'HTML', 'CSS', '안드로이드 프로그래밍', 'TCP/IP', 'R 프로그래밍', 'PHP', '코틀린', '프로그래밍',
+'c#', 'GO 언어']
 
 for a in search_list:
     for i in range(1,6):
