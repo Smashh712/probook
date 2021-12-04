@@ -34,3 +34,9 @@ for key, val in save_dict.items():
 
 booklist_id = list(booklist_dict)
 booklist_name = list(booklist_dict.values())
+
+book_df = pd.DataFrame(index=booklist_id)
+
+user_id, book_id, score = input("사용자 id, 책 id, 평점을 입력해주세요.\n").split(',')
+
+book_df.insert(len(book_df.columns)+1,user_id,0)
