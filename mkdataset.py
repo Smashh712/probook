@@ -22,3 +22,7 @@ for a in search_list:
             for i in range(len(dd["object"]["item"])):
                 booklist_id.append(dd["object"]["item"][i]["@itemId"])
                 booklist_name.append(dd["object"]["item"][i]["title"])
+
+dict.fromkeys(booklist_id)
+booklist_id = list(dict.fromkeys(booklist_id))
+booklist_name = list(dict.fromkeys(booklist_name))
