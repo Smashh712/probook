@@ -1,6 +1,7 @@
 import requests
 import xmltodict
 import json
+import pandas as pd
 
 booklist_id = []
 booklist_name = []
@@ -31,6 +32,5 @@ for key, val in save_dict.items():
         booklist_dict[key] = val
 
 
-with open('../data/booklist.txt','w',encoding='UTF-8') as f:
-    for id, name in booklist_dict.items():
-        f.write(f'{id} : {name}\n')
+booklist_id = list(booklist_dict)
+booklist_name = list(booklist_dict.values())
