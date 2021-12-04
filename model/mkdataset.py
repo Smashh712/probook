@@ -36,7 +36,9 @@ booklist_id = list(booklist_dict)
 booklist_name = list(booklist_dict.values())
 
 book_df = pd.DataFrame(index=booklist_id)
+book_df.index.name = 'book_id'
+book_df.columns.name = 'user_id'
 
 user_id, book_id, score = input("사용자 id, 책 id, 평점을 입력해주세요.\n").split(',')
 
-book_df.insert(len(book_df.columns)+1,user_id,0)
+book_df.insert(0,user_id,0)
