@@ -23,6 +23,9 @@ for a in search_list:
                 booklist_id.append(dd["object"]["item"][i]["@itemId"])
                 booklist_name.append(dd["object"]["item"][i]["title"])
 
-dict.fromkeys(booklist_id)
 booklist_id = list(dict.fromkeys(booklist_id))
 booklist_name = list(dict.fromkeys(booklist_name))
+booklist_dict = dict(zip(booklist_id, booklist_name))
+print(booklist_id)
+print(booklist_name)
+print(booklist_dict)
