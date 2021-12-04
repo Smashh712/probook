@@ -29,7 +29,3 @@ for key, val in save_dict.items():
     if key not in seen:
         seen.append(key)
         booklist_dict[key] = val
-
-print(len(booklist_id))
-print(len(booklist_name))
-print(len(booklist_dict))
