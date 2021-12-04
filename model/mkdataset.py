@@ -29,3 +29,8 @@ for key, val in save_dict.items():
     if key not in seen:
         seen.append(key)
         booklist_dict[key] = val
+
+
+with open('../data/booklist.txt','w',encoding='UTF-8') as f:
+    for id, name in booklist_dict.items():
+        f.write(f'{id} : {name}\n')
