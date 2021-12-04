@@ -10,3 +10,7 @@ dd = json.loads(json.dumps(cc)) # return dict
 print(r)
 print(cc)
 print(dd)
+
+print(dd["object"]["item"])
+print(dd["object"]["item"][0]["@itemId"])
+print(dd["object"]["item"][0]["title"])
