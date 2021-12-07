@@ -2,6 +2,7 @@ import requests
 import xmltodict
 import json
 import pandas as pd
+import numpy as np
 
 booklist_id = []
 booklist_name = []
@@ -46,3 +47,5 @@ book_df.insert(0,user_id,0)
 for j in range(len(book_df)):
     if book_id == book_df.index[j]:
         book_df.iloc[j,0] = score
+
+print(book_df)
