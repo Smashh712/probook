@@ -37,6 +37,10 @@ for key, val in save_dict.items():
 booklist_id = list(booklist_dict)
 booklist_name = list(booklist_dict.values())
 
+with open("../data/booklist_id.csv", 'w') as file:
+    writer = csv.writer(file)
+    writer.writerow(booklist_id)
+
 book_df = pd.DataFrame(index=booklist_id)
 book_df.index.name = 'book_id'
 book_df.columns.name = 'user_id'
@@ -51,6 +55,4 @@ for j in range(len(book_df)):
 
 print(book_df)
 
-with open("../data/booklist_id.csv", 'w') as file:
-    writer = csv.writer(file)
-    writer.writerow(booklist_id)
+
