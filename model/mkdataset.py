@@ -3,6 +3,7 @@ import xmltodict
 import json
 import pandas as pd
 import numpy as np
+import csv
 
 booklist_id = []
 booklist_name = []
@@ -49,3 +50,7 @@ for j in range(len(book_df)):
         book_df.iloc[j,0] = score
 
 print(book_df)
+
+with open("../data/booklist_id.csv", 'w') as file:
+    writer = csv.writer(file)
+    writer.writerow(booklist_id)
