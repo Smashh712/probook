@@ -106,15 +106,11 @@ def search(request):
                 date = xml["object"]["item"][i]["pubDate"]
                 date = dt.datetime.strptime(date, "%a, %d %b %Y %H:%M:%S GMT")
                 date = f"{date.year}년 {date.month}월 {date.day}일"
-<<<<<<< HEAD
                 book_id = xml["object"]["item"][i]["@itemId"]
 
                 new_book.append(
                     [title, cover, author, descript, publisher, date, book_id]
                 )
-=======
-                new_book.append([title, cover, author, descript, publisher, date])
->>>>>>> 003c9ed34f374ba7d87d4a60463da114f5c41ad9
                 i += 1
     # 입력 파라미터
     page = request.GET.get("page", "1")  # 페이지
@@ -129,7 +125,6 @@ def search(request):
     context["segment"] = load_template
     context["key"] = keyword
     return render(request, "home/tables.html", context)
-<<<<<<< HEAD
 
 
 @login_required(login_url="/login/")
@@ -159,5 +154,3 @@ def book(request):
     context["book_feature"] = new_book
     context["segment"] = "search"
     return render(request, "home/book.html", context)
-=======
->>>>>>> 003c9ed34f374ba7d87d4a60463da114f5c41ad9
