@@ -153,4 +153,4 @@ def book(request):
     context = dict()
     context["book_feature"] = new_book
     context["segment"] = "search"
-    return render(request, "home/profile.html", context)
+    return render(request, "home/book.html", context)
