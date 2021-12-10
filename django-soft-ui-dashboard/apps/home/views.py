@@ -91,8 +91,8 @@ def search(request):
     recommned_list = []
     if keyword:
         recommend_list = recommend()
-    j = 0
-    while j < 2:
+    j = 1
+    while j < 3:
         test = requests.get(
             f"https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbmlboy101516001&Query={keyword}&QueryType=Title&MaxResults=50&start={j}&SearchTarget=Book&output=xml&Version=20070901&Sort=Accuracy"
         )
@@ -120,6 +120,7 @@ def search(request):
     # 입력 파라미터
     rec_idx = recommend_list.index
     temp = []
+    temp2 = []
     for i in range(len(recommend_list)):
         if recommend_list.iloc[i] > 0:
             print("test")
@@ -129,13 +130,11 @@ def search(request):
             # print(new_book[j][6])
             # print(i, j[6])
             if str(rec_idx[i]) == new_book[j][6]:
-                print(rec_idx[i])
-                print(new_book[j])
                 temp.append(j)
 
-    for i in temp:
-        new_book.pop(i)
+    for i in temp[::-1]:
         new_book.insert(0, new_book[i])
+        new_book.pop(i)
 
     # print(new_book)
     print(recommend_list)
