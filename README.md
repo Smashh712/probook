@@ -30,6 +30,26 @@ Computer Engeneering, Chungbuk national University.
 <img width="500" alt="architecture" src="./img/architecture.png">  
 =전체 시스템 구성도=
 
+## 의존성
+Window 환경에서 Python 3.9, Django(3.2.7) 웹 프레임 워크, MySQL 활용.
+Tensorflow2(2.6.0) 라이브러리를 이용
+
+### 사용 방법
+- Download the trained models
+ 
+ *Model name* | *Used datasets* | *Languages* | *Purpose* | *Model Link* |
+ | :--- | :--- | :--- | :--- | :--- |
+General | SynthText, IC13, IC17 | Eng + MLT | For general purpose | [Click](https://drive.google.com/open?id=1Jk4eGD7crsqCCg9C9VjCLkMN3ze8kutZ)
+IC15 | SynthText, IC15 | Eng | For IC15 only | [Click](https://drive.google.com/open?id=1i2R7UIUqmkUtF0jv_3MXTqmQ_9wuAnLf)
+LinkRefiner | CTW1500 | - | Used with the General Model | [Click](https://drive.google.com/open?id=1XSaFwBkOaFOdtk4Ane3DFyJGPRw6v5bO)
+
+* Run with pretrained model
+``` (with python 3.7)
+python mkrecommend_list.py
+```
+
+The result image and socre maps will be saved to `./result` by default.
+
 ## 기대효과
 ```
 프로그래밍과 컴퓨터 공학 전반을 다루는 도서를 위한 평가와 추천을 제공함으로써  
