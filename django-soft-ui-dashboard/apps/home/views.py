@@ -106,9 +106,11 @@ def search(request):
                 date = xml["object"]["item"][i]["pubDate"]
                 date = dt.datetime.strptime(date, "%a, %d %b %Y %H:%M:%S GMT")
                 date = f"{date.year}년 {date.month}월 {date.day}일"
-                book_id = xml["object"]["item"][i]["id"]
-                
-                new_book.append([title, cover, author, descript, publisher, date,book_id])
+                book_id = xml["object"]["item"][i]["@itemId"]
+
+                new_book.append(
+                    [title, cover, author, descript, publisher, date, book_id]
+                )
                 i += 1
     # 입력 파라미터
     page = request.GET.get("page", "1")  # 페이지
@@ -150,4 +152,5 @@ def book(request):
 
     context = dict()
     context["book_feature"] = new_book
+    context["segment"] = "search"
     return render(request, "home/profile.html", context)
