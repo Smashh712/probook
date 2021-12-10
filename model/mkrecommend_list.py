@@ -1,7 +1,6 @@
 import pandas as pd 
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.metrics import mean_squared_error
 
 score_df = pd.read_csv("../data/user-bookscore.csv", sep=',') #평점 데이터 파일
 
@@ -16,7 +15,7 @@ book_df = pd.DataFrame(index=booklist_id)
 book_df.index.name = 'book_id'
 book_df.columns.name = 'user_id'
 
-usboscore_df = book_df.join(score_table)
+usboscore_df = book_df.join(score_table) # 모든 도서 데이터와 합치는 것
 usboscore_df=usboscore_df.fillna(0)
 
 score_table_T = score_table.transpose()
@@ -44,3 +43,6 @@ for j in score_table.index:
     rec_list.loc[j,know_user] = sum / count
 
 unread_filter = score_table[know_user] == 0
+rec_list = rec_list.loc[unread_filter]
+
+print(rec_list[know_user].sort_values(ascending=False)) # 최종 결과(추천 리스트)
