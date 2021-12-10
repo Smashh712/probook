@@ -1,7 +1,7 @@
 ## Machine Learning-based programming book recommendation service
 
 
-## Licences
+### Licences
 **[Jang Hyuksoon](mailto:smashh712@gmail.com), [You Jiwon](mailto:jiwon71@g.cbnu.ac.kr), ZHU HANG.**
  
 Computer Engeneering, Chungbuk national University.
