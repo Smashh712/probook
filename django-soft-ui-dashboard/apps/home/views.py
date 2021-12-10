@@ -121,3 +121,31 @@ def search(request):
     context["segment"] = load_template
     context["key"] = keyword
     return render(request, "home/tables.html", context)
+
+
+@login_required(login_url="/login/")
+def book(request):
+    book_id = request.GET.get("id", "1")  # 페이지
+
+    test = requests.get(
+        f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=ttbmlboy101516001&itemIdType=ItemId&ItemId={book_id}&output=xml&Cover=Big"
+    )
+    xml = xmltodict.parse(test.text)
+    new_book = []
+    new_book.append(xml["object"]["item"]["title"])
+    new_book.append(xml["object"]["item"]["author"])
+    new_book.append(xml["object"]["item"]["publisher"])
+    new_book.append(xml["object"]["item"]["cover"])
+    description = xml["object"]["item"]["description"]
+    new_book.append(description[description.find("br") + 4 :])
+    date = xml["object"]["item"]["pubDate"]
+    date = dt.datetime.strptime(date, "%a, %d %b %Y %H:%M:%S GMT")
+    date = f"{date.year}년 {date.month}월 {date.day}일"
+
+    new_book.append(date)
+    new_book.append(xml["object"]["item"]["priceStandard"])
+    new_book.append(xml["object"]["item"]["categoryName"])
+
+    context = dict()
+    context["book_feature"] = new_book
+    return render(request, "home/profile.html", context)
