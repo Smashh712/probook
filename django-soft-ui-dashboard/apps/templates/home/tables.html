@@ -44,10 +44,9 @@
                   </td>
                   <td>
                     <p class="text-xs font-weight-bold mb-0">{{book.2}}</p>
-                    <p class="text-xs text-secondary mb-0">Organization</p>
                   </td>
                   <td class="align-middle text-center text-sm">
-                    <span class="badge badge-sm bg-gradient-success">{{book.4}}</span>
+                    <span class="text-secondary text-xs font-weight-bold">{{book.4}}</span>
                   </td>
                   <td class="align-middle text-center">
                     <span class="text-secondary text-xs font-weight-bold">{{book.5}}</span>
@@ -59,7 +58,9 @@
               </tbody>
             </table>
           </div>
+
         </div>
+        <br>
         <ul class="pagination justify-content-center">
           <!-- 이전페이지 -->
           {% if book_list.has_previous %}
@@ -94,8 +95,8 @@
           </li>
           {% endif %}
         </ul>
-        <!-- 페이징처리 끝 -->
 
+        <!-- 페이징처리 끝 -->
       </div>
     </div>
   </div>

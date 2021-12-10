@@ -79,17 +79,13 @@ def pages(request):
 
 @login_required(login_url="/login/")
 def search(request):
-    test = requests.get(
-        "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbmlboy101516001&Query=파이썬&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=xml&Version=20070901&Sort=Accuracy"
-    )
-    xml = xmltodict.parse(test.text)
-    xml["object"]["item"]
-
+    keyword = request.GET.get("key", "파이썬")  # 페이지
     new_book = []
+    print(keyword)
     j = 0
     while j < 2:
         test = requests.get(
-            f"https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbmlboy101516001&Query=파이썬&QueryType=Title&MaxResults=50&start={j}&SearchTarget=Book&output=xml&Version=20070901&Sort=Accuracy"
+            f"https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbmlboy101516001&Query={keyword}&QueryType=Title&MaxResults=50&start={j}&SearchTarget=Book&output=xml&Version=20070901&Sort=Accuracy"
         )
         xml = xmltodict.parse(test.text)
         j += 1
@@ -97,6 +93,8 @@ def search(request):
             i = 0
             while i < len(xml["object"]["item"]):
                 title = xml["object"]["item"][i]["title"]
+                if len(title) > 40:
+                    title = title[:40] + " ..."
                 cover = xml["object"]["item"][i]["cover"]
                 author = xml["object"]["item"][i]["author"]
                 descript = xml["object"]["item"][i]["description"]
@@ -108,10 +106,13 @@ def search(request):
                 i += 1
     # 입력 파라미터
     page = request.GET.get("page", "1")  # 페이지
-
+    print(page)
     # 페이징처리
     paginator = Paginator(new_book, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
 
     context = {"book_list": page_obj}
+
+    load_template = request.path.split("/")[-1]
+    context["segment"] = load_template
     return render(request, "home/tables.html", context)
