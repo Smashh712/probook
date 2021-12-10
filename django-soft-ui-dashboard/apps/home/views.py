@@ -14,6 +14,7 @@ import datetime as dt
 import requests
 import xmltodict
 import random
+import time
 
 
 @login_required(login_url="/login/")
@@ -86,7 +87,7 @@ def search(request):
 
     new_book = []
     j = 0
-    while 1:
+    while j < 2:
         test = requests.get(
             f"https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbmlboy101516001&Query=파이썬&QueryType=Title&MaxResults=50&start={j}&SearchTarget=Book&output=xml&Version=20070901&Sort=Accuracy"
         )
@@ -100,11 +101,11 @@ def search(request):
                 author = xml["object"]["item"][i]["author"]
                 descript = xml["object"]["item"][i]["description"]
                 publisher = xml["object"]["item"][i]["publisher"]
-                title = xml["object"]["item"][i]["pubDate"]
-                date = dt.datetime.strptime(title, "%a, %d %b %Y %H:%M:%S GMT")
+                date = xml["object"]["item"][i]["pubDate"]
+                date = dt.datetime.strptime(date, "%a, %d %b %Y %H:%M:%S GMT")
+                date = f"{date.year}년 {date.month}월 {date.day}일"
                 new_book.append([title, cover, author, descript, publisher, date])
                 i += 1
-
     # 입력 파라미터
     page = request.GET.get("page", "1")  # 페이지
 
@@ -113,6 +114,4 @@ def search(request):
     page_obj = paginator.get_page(page)
 
     context = {"book_list": page_obj}
-
-    print(context)
-    return render(request, "home/table.html", context)
+    return render(request, "home/tables.html", context)
