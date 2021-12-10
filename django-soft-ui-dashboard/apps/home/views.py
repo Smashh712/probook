@@ -9,6 +9,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
+from django.core.paginator import Paginator
+
 import requests
 import xmltodict
 import random
@@ -72,3 +74,34 @@ def pages(request):
     except:
         html_template = loader.get_template("home/page-500.html")
         return HttpResponse(html_template.render(context, request))
+
+
+@login_required(login_url="/login/")
+def search(request):
+    test = requests.get(
+        "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbmlboy101516001&Query=파이썬&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=xml&Version=20070901&Sort=Accuracy"
+    )
+    xml = xmltodict.parse(test.text)
+    xml["object"]["item"]
+
+    new_book = []
+    idx = random.randint(0, len(xml["object"]))
+    title = xml["object"]["item"][idx]["title"]
+    cover = xml["object"]["item"][idx]["cover"]
+    author = xml["object"]["item"][idx]["author"]
+    descript = xml["object"]["item"][idx]["description"]
+    descript = xml["object"]["item"][idx]["publisher"]
+
+    new_book.append([title, cover, author, descript])
+
+    # 입력 파라미터
+    page = request.GET.get("page", "1")  # 페이지
+
+    # 페이징처리
+    paginator = Paginator(question_list, 10)  # 페이지당 10개씩 보여주기
+    page_obj = paginator.get_page(page)
+
+    context = {"question_list": page_obj}
+
+    print(context)
+    return render(request, "home/table.html", context)
