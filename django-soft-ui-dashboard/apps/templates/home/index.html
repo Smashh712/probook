@@ -106,7 +106,9 @@
             <div class="col-lg-6">
               <div class="d-flex flex-column h-100">
                 <p class="mb-1 pt-2 text-bold">오늘의 추천 신간</p>
-                <h5 class="font-weight-bolder" style="font-size:1.15rem;">{{new_book.0.0}}</h5>
+                <a href="/book?id={{new_book.0.3}}">
+                  <h5 class="font-weight-bolder" style="font-size:1.15rem;">{{new_book.0.0}}</h5>
+                </a>
                 <p class="mb-4">{{new_book.0.2}}</p>
                 <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
                   Read More
