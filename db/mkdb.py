@@ -23,7 +23,7 @@ def saveDBtable(db, data) :
     conn = sqlite3.connect(db)
     cur = conn.cursor()
  
-    sql = "insert into bookdb(book_id, book_name, book_img, book_pubD, book_auth, book_publi) values (?,?,?,?,?,?)"
+    sql = "insert into bookdb(book_id, book_name, book_img, book_pubD, book_auth, book_publi, type0, type1, type2, type3, difficulty, nop) values (?,?,?,?,?,?,?,?,?,?,?,?)"
     cur.executemany(sql, data)
  
     conn.commit() # 트랜젝션의 내용을 DB에 반영함
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     f = open('../data/bookli.txt', 'r', encoding='UTF-8')
  
     #matrix = [[0 for col in range(10)] for row in range(10)]
-    matrix =[[0]*6 for row in range(891)]
+    matrix =[[0]*12 for row in range(891)]
 
     tempFile = f.read().splitlines()
 
