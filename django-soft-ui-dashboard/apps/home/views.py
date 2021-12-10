@@ -118,15 +118,25 @@ def search(request):
                 )
                 i += 1
     # 입력 파라미터
+    rec_idx = recommend_list.index
+    temp = []
+    for i in range(len(recommend_list)):
+        if recommend_list.iloc[i] > 0:
+            print("test")
+            print(recommend_list.iloc[i])
+            # break
+        for j in range(len(new_book)):
+            # print(new_book[j][6])
+            # print(i, j[6])
+            if str(rec_idx[i]) == new_book[j][6]:
+                print(rec_idx[i])
+                print(new_book[j])
+                temp.append(j)
 
-    for i in recommend_list:
-        for j in new_book:
-            # print(j[6])
-            print(i, j[6])
-            if int(i) == j[6]:
-                print("test")
-                new_book.pop(j)
-                new_book.insert(0, j)
+    for i in temp:
+        new_book.pop(i)
+        new_book.insert(0, new_book[i])
+
     # print(new_book)
     print(recommend_list)
     page = request.GET.get("page", "1")  # 페이지
