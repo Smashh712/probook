@@ -16,7 +16,7 @@ book_df.index.name = 'book_id'
 book_df.columns.name = 'user_id'
 
 ub_score_df = book_df.join(score_tb) # 모든 도서 데이터와 합치는 것
-ub_score_df=ub_score_df.fillna(0)
+ub_score_df = ub_score_df.fillna(0)
 
 score_tb_T = score_tb.transpose()
 

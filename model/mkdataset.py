@@ -41,23 +41,25 @@ with open("../data/booklist.txt",'w',encoding='UTF-8') as f:
     for id, name in booklist_dict.items():
         f.write(f'{id} : {name}\n')
 
+with open("../data/bookli.txt",'w',encoding='UTF-8') as f:
+    for id, name in booklist_dict.items():
+        f.write(f'{id}&*&{name}\n')
+
 with open("../data/booklist_id.csv", 'w') as file:
     writer = csv.writer(file)
     writer.writerow(booklist_id)
 
 ##
-book_df = pd.DataFrame(index=booklist_id)
-book_df.index.name = 'book_id'
-book_df.columns.name = 'user_id'
+# book_df = pd.DataFrame(index=booklist_id)
+# book_df.index.name = 'book_id'
+# book_df.columns.name = 'user_id'
 
-user_id, book_id, score = input("사용자 id, 책 id, 평점을 입력해주세요.\n").split(',')
+# user_id, book_id, score = input("사용자 id, 책 id, 평점을 입력해주세요.\n").split(',')
 
-book_df.insert(0,user_id,0)
+# book_df.insert(0,user_id,0)
 
-for j in range(len(book_df)):
-    if book_id == book_df.index[j]:
-        book_df.iloc[j,0] = score
+# for j in range(len(book_df)):
+#     if book_id == book_df.index[j]:
+#         book_df.iloc[j,0] = score
 
-print(book_df)
-
-
+# print(book_df)
