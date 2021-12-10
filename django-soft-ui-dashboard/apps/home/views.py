@@ -115,4 +115,5 @@ def search(request):
 
     load_template = request.path.split("/")[-1]
     context["segment"] = load_template
+    context["key"] = keyword
     return render(request, "home/tables.html", context)

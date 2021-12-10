@@ -65,7 +65,7 @@
           <!-- 이전페이지 -->
           {% if book_list.has_previous %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ book_list.previous_page_number }}">이전</a>
+            <a class="page-link" href="?key={{key}}&page={{ book_list.previous_page_number }}">이전</a>
           </li>
           {% else %}
           <li class="page-item disabled">
@@ -76,18 +76,18 @@
           {% for page_number in book_list.paginator.page_range %}
           {% if page_number == book_list.number %}
           <li class="page-item active" aria-current="page">
-            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            <a class="page-link" href="?key={{key}}&page={{ page_number }}">{{ page_number }}</a>
           </li>
           {% else %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            <a class="page-link" href="?key={{key}}&page={{ page_number }}">{{ page_number }}</a>
           </li>
           {% endif %}
           {% endfor %}
           <!-- 다음페이지 -->
           {% if book_list.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ book_list.next_page_number }}">다음</a>
+            <a class="page-link" href="?key={{key}}&page={{ book_list.next_page_number }}">다음</a>
           </li>
           {% else %}
           <li class="page-item disabled">
