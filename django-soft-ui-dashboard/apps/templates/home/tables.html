@@ -35,7 +35,7 @@
                   <td>
                     <div class="d-flex px-2 py-1">
                       <div>
-                        <img src="/static/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                        <img src="{{book.1}}" class="avatar avatar-sm me-3" alt="user1">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm">{{book.0}}</h6>
@@ -60,6 +60,42 @@
             </table>
           </div>
         </div>
+        <ul class="pagination justify-content-center">
+          <!-- 이전페이지 -->
+          {% if book_list.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ book_list.previous_page_number }}">이전</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+          </li>
+          {% endif %}
+          <!-- 페이지리스트 -->
+          {% for page_number in book_list.paginator.page_range %}
+          {% if page_number == book_list.number %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+          <!-- 다음페이지 -->
+          {% if book_list.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ book_list.next_page_number }}">다음</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+          </li>
+          {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
+
       </div>
     </div>
   </div>
