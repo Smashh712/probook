@@ -15,10 +15,14 @@ import requests
 import xmltodict
 import random
 import time
+from .models import Hit
 
 
 @login_required(login_url="/login/")
 def index(request):
+    q = Hit.objects.get(id=1)
+    q.hit += 1
+    q.save()
 
     test = requests.get(
         "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbmlboy101516001&QueryType=ItemNewAll&MaxResults=50&start=1&SearchTarget=Book&CategoryId=437&output=xml&Version=20131101"
@@ -46,8 +50,8 @@ def index(request):
     new_book.append([title, cover, author, descript])
 
     context = {"new_book": new_book}
-
-    print(context)
+    context["num_new"] = len(xml["object"]["item"])
+    context["hit"] = q.hit
     return render(request, "home/index.html", context)
 
 
