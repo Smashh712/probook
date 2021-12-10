@@ -34,9 +34,9 @@ def index(request):
     title = xml["object"]["item"][idx]["title"]
     cover = xml["object"]["item"][idx]["cover"]
     author = xml["object"]["item"][idx]["author"]
-    descript = xml["object"]["item"][idx]["description"]
+    book_id = xml["object"]["item"][idx]["@itemId"]
 
-    new_book.append([title, cover, author, descript])
+    new_book.append([title, cover, author, book_id])
 
     idx2 = idx
     while idx2 == idx:
@@ -45,9 +45,9 @@ def index(request):
     title = xml["object"]["item"][idx2]["title"]
     cover = xml["object"]["item"][idx2]["cover"]
     author = xml["object"]["item"][idx2]["author"]
-    descript = xml["object"]["item"][idx2]["description"]
+    book_id = xml["object"]["item"][idx2]["@itemId"]
 
-    new_book.append([title, cover, author, descript])
+    new_book.append([title, cover, author, book_id])
 
     context = {"new_book": new_book}
     context["num_new"] = len(xml["object"]["item"])
