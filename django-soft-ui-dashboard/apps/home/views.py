@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
 from django.core.paginator import Paginator
-
+import datetime as dt
 import requests
 import xmltodict
 import random
@@ -85,23 +85,34 @@ def search(request):
     xml["object"]["item"]
 
     new_book = []
-    idx = random.randint(0, len(xml["object"]))
-    title = xml["object"]["item"][idx]["title"]
-    cover = xml["object"]["item"][idx]["cover"]
-    author = xml["object"]["item"][idx]["author"]
-    descript = xml["object"]["item"][idx]["description"]
-    descript = xml["object"]["item"][idx]["publisher"]
-
-    new_book.append([title, cover, author, descript])
+    j = 0
+    while 1:
+        test = requests.get(
+            f"https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbmlboy101516001&Query=파이썬&QueryType=Title&MaxResults=50&start={j}&SearchTarget=Book&output=xml&Version=20070901&Sort=Accuracy"
+        )
+        xml = xmltodict.parse(test.text)
+        j += 1
+        if "item" in xml["object"]:
+            i = 0
+            while i < len(xml["object"]["item"]):
+                title = xml["object"]["item"][i]["title"]
+                cover = xml["object"]["item"][i]["cover"]
+                author = xml["object"]["item"][i]["author"]
+                descript = xml["object"]["item"][i]["description"]
+                publisher = xml["object"]["item"][i]["publisher"]
+                title = xml["object"]["item"][i]["pubDate"]
+                date = dt.datetime.strptime(title, "%a, %d %b %Y %H:%M:%S GMT")
+                new_book.append([title, cover, author, descript, publisher, date])
+                i += 1
 
     # 입력 파라미터
     page = request.GET.get("page", "1")  # 페이지
 
     # 페이징처리
-    paginator = Paginator(question_list, 10)  # 페이지당 10개씩 보여주기
+    paginator = Paginator(new_book, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
 
-    context = {"question_list": page_obj}
+    context = {"book_list": page_obj}
 
     print(context)
     return render(request, "home/table.html", context)
