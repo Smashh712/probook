@@ -26,17 +26,24 @@ def index(request):
     idx = random.randint(0, len(xml["object"]))
     title = xml["object"]["item"][idx]["title"]
     cover = xml["object"]["item"][idx]["cover"]
-    new_book.append([title, cover])
+    author = xml["object"]["item"][idx]["author"]
+    descript = xml["object"]["item"][idx]["description"]
+
+    new_book.append([title, cover, author, descript])
 
     idx2 = idx
     while idx2 == idx:
         idx2 = random.randint(0, len(xml["object"]))
 
-    title = xml["object"]["item"][idx]["title"]
-    cover = xml["object"]["item"][idx]["cover"]
-    new_book.append([title, cover])
+    title = xml["object"]["item"][idx2]["title"]
+    cover = xml["object"]["item"][idx2]["cover"]
+    author = xml["object"]["item"][idx2]["author"]
+    descript = xml["object"]["item"][idx2]["description"]
 
-    context = {"a": new_book}
+    new_book.append([title, cover, author, descript])
+
+    context = {"new_book": new_book}
+
     print(context)
     return render(request, "home/index.html", context)
 
