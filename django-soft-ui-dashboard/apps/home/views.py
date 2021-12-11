@@ -122,11 +122,9 @@ def search(request):
     temp = []
     temp2 = []
     for i in range(len(recommend_list)):
-        if recommend_list.iloc[i] < 0:
+        if recommend_list.iloc[i] <= 0:
             break
         for j in range(len(new_book)):
-            # print(new_book[j][6])
-            print(rec_idx[i], j[6])
             if str(rec_idx[i]) == new_book[j][6]:
                 temp2.append(new_book[j])
                 break
