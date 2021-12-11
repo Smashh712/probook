@@ -18,7 +18,8 @@ import time
 import sqlite3
 from .models import Hit, User
 import pandas as pd
-from .rec_model.mkrecommend_list import *
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 @login_required(login_url="/login/")
@@ -199,9 +200,8 @@ def recommend(rec_user):
         user.append(row.user_id)
         book.append(row.book_id)
         like.append(row.like)
-    df = pd.DataFrame({"user_id": user, "book_id": book, "score": like})
+    score_df = pd.DataFrame({"user_id": user, "book_id": book, "score": like})
 
-    print(df)
     score_tb = pd.pivot_table(
         score_df, values="score", index=["book_id"], columns=["user_id"], aggfunc=np.sum
     )
