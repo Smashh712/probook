@@ -122,22 +122,22 @@ def search(request):
     temp = []
     temp2 = []
     for i in range(len(recommend_list)):
-        if recommend_list.iloc[i] > 0:
+        if recommend_list.iloc[i] < 0:
             break
         for j in range(len(new_book)):
             # print(new_book[j][6])
-            # print(i, j[6])
+            print(rec_idx[i], j[6])
             if str(rec_idx[i]) == new_book[j][6]:
-                temp.append(new_book[j])
+                temp2.append(new_book[j])
                 break
 
     for j in range(len(new_book)):
-        if new_book[j] in temp2:
+        if new_book[j] not in temp2:
             temp.append(new_book[j])
 
     new_book = temp2[::-1] + temp
-    print(len(new_book))
-    print(new_book)
+    print(temp2)
+    # print(new_book)
     # print(new_book)
     page = request.GET.get("page", "1")  # 페이지
     # 페이징처리
