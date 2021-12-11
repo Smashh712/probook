@@ -87,12 +87,12 @@ def pages(request):
 
 @login_required(login_url="/login/")
 def search(request):
-    print(request.user.id)
+
     keyword = request.GET.get("key", "파이썬")  # 페이지
     new_book = []
     recommned_list = []
     if keyword:
-        recommend_list = recommend(1)
+        recommend_list = recommend(request.user.id)
     j = 1
     while j < 3:
         test = requests.get(
@@ -195,6 +195,16 @@ def recommend(rec_user):
     user = []
     book = []
     like = []
+    # score_df = pd.read_csv(
+    #     "C:/hs/probook/django-soft-ui-dashboard/apps/home/data/user-bookscore.csv",
+    #     sep=",",
+    # )
+    # for i in range(len(score_df)):
+    #     a = score_df.iloc[i, 0]
+    #     b = score_df.iloc[i, 1]
+    #     c = score_df.iloc[i, 2]
+    #     q = User(user_id=a, book_id=b, like=c)
+    #     q.save()
 
     for row in data:
         user.append(row.user_id)
