@@ -123,23 +123,23 @@ def search(request):
     temp2 = []
     for i in range(len(recommend_list)):
         if recommend_list.iloc[i] > 0:
-            print("test")
-            print(recommend_list.iloc[i])
-            # break
+            break
         for j in range(len(new_book)):
             # print(new_book[j][6])
             # print(i, j[6])
             if str(rec_idx[i]) == new_book[j][6]:
-                temp.append(j)
+                temp.append(new_book[j])
+                break
 
-    for i in temp[::-1]:
-        new_book.insert(0, new_book[i])
-        new_book.pop(i)
+    for j in range(len(new_book)):
+        if new_book[j] in temp2:
+            temp.append(new_book[j])
 
+    new_book = temp2[::-1] + temp
+    print(len(new_book))
+    print(new_book)
     # print(new_book)
-    print(recommend_list)
     page = request.GET.get("page", "1")  # 페이지
-    print(page)
     # 페이징처리
     paginator = Paginator(new_book, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
