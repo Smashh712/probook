@@ -41,6 +41,7 @@ Tensorflow2(2.6.0) 라이브러리를 이용
 * Run with pretrained model
 ``` (with python 3.7)
 python mkrecommend_list.py
+python manage.py runserver 0.0.0.0:8000
 ```
 
 The result image and socre maps will be saved to `./result` by default.
