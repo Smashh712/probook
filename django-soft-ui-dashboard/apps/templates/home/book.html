@@ -77,8 +77,14 @@
             <hr class="horizontal gray-light my-4">
             <ul class="list-group">
               <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong>
-                &nbsp;
                 Alec M. Thompson</li>
+              {{ like }}
+              <form action="/like" method="post">{% csrf_token %}
+                <input type="hidden" name="book_id" value="{{ book_id }}">
+                <input type="hidden" name="path" value="{{request.path}}" />
+                <input type="number" name="like" value="평점">
+                <input type="submit" value="입력">
+              </form>
               <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (44)
                 123
                 1234 123</li>

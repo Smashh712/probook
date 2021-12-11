@@ -16,8 +16,8 @@ import xmltodict
 import random
 import time
 import sqlite3
-from .models import Hit
-
+from .models import Hit, User
+import pandas as pd
 from .rec_model.mkrecommend_list import *
 
 
@@ -86,11 +86,12 @@ def pages(request):
 
 @login_required(login_url="/login/")
 def search(request):
+    print(request.user.id)
     keyword = request.GET.get("key", "파이썬")  # 페이지
     new_book = []
     recommned_list = []
     if keyword:
-        recommend_list = recommend()
+        recommend_list = recommend(1)
     j = 1
     while j < 3:
         test = requests.get(
@@ -176,12 +177,32 @@ def book(request):
     context = dict()
     context["book_feature"] = new_book
     context["segment"] = "search"
+    context["book_id"] = book_id
+    like = 0
+    try:
+        existUser = User.objects.get(user_id=request.user.id, book_id=book_id)
+        if existUser:
+            like = existUser.like
+    except:
+        pass
+    context["like"] = like
     return render(request, "home/book.html", context)
 
 
-def recommend():
-    score_df = pd.read_csv("../data/user-bookscore.csv", sep=",")  # 평점 데이터 파일
+def recommend(rec_user):
+    score_df = pd.read_csv(
+        "C:/hs/probook/data/user-bookscore.csv", sep=","
+    )  # 평점 데이터 파일
 
+    # for i in range(len(score_df)):
+    #     id_ = score_df.iloc[i, 0]
+    #     book_ = score_df.iloc[i, 1]
+    #     score_ = score_df.iloc[i, 1]
+    #     q = User(book_id=book_, user_id=id_, like=score_)
+    #     q.save()
+
+    for i in score_df:
+        print()
     score_tb = pd.pivot_table(
         score_df, values="score", index=["book_id"], columns=["user_id"], aggfunc=np.sum
     )
@@ -189,6 +210,7 @@ def recommend():
 
     with open("../data/booklist_id.csv", "r", encoding="UTF-8") as f:
         line = f.read()
+
     booklist_id = line.split(",")
 
     book_df = pd.DataFrame(index=booklist_id)
@@ -206,8 +228,6 @@ def recommend():
     user_sim_df = pd.DataFrame(
         data=user_sim, index=score_tb.columns, columns=score_tb.columns
     )
-
-    rec_user = 2021002  # 추천 받고자 하는 user의 id
 
     rec_list = pd.DataFrame(index=score_tb.index)
 
@@ -227,3 +247,22 @@ def recommend():
     rec_list = rec_list.loc[unread_filter]
 
     return rec_list[rec_user].sort_values(ascending=False)  # 최종 결과(추천 리스트)
+
+
+@login_required(login_url="/login/")
+def like(request):
+    try:
+        existUser = User.objects.get(
+            user_id=request.user.id, book_id=request.POST["book_id"]
+        )
+        if existUser:
+            existUser.like = request.POST["like"]
+            existUser.save()
+    except:
+        user = User()
+        user.user_id = request.user.id
+        user.book_id = request.POST["book_id"]
+        user.like = request.POST["like"]
+        user.save()
+
+    return HttpResponseRedirect(request.POST["path"] + "?id=" + request.POST["book_id"])
