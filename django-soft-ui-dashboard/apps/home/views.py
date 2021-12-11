@@ -190,16 +190,7 @@ def book(request):
 
 
 def recommend(rec_user):
-    score_df = pd.read_csv(
-        "C:/hs/probook/data/user-bookscore.csv", sep=","
-    )  # 평점 데이터 파일
-
-    # for i in range(len(score_df)):
-    #     id_ = score_df.iloc[i, 0]
-    #     book_ = score_df.iloc[i, 1]
-    #     score_ = score_df.iloc[i, 1]
-    #     q = User(book_id=book_, user_id=id_, like=score_)
-    #     q.save()
+    score_df = pd.read_csv("../data/user-bookscore.csv", sep=",")  # 평점 데이터 파일
 
     for i in score_df:
         print()
