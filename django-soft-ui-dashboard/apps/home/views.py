@@ -190,10 +190,18 @@ def book(request):
 
 
 def recommend(rec_user):
-    score_df = pd.read_csv("../data/user-bookscore.csv", sep=",")  # 평점 데이터 파일
+    data = User.objects.all()
+    user = []
+    book = []
+    like = []
 
-    for i in score_df:
-        print()
+    for row in data:
+        user.append(row.user_id)
+        book.append(row.book_id)
+        like.append(row.like)
+    df = pd.DataFrame({"user_id": user, "book_id": book, "score": like})
+
+    print(df)
     score_tb = pd.pivot_table(
         score_df, values="score", index=["book_id"], columns=["user_id"], aggfunc=np.sum
     )
